@@ -2,13 +2,12 @@
   "name": "serverless-todo-app",
   "version": "1.0.0",
   "type": "module",
-  "description": "Serverless TODO image app",
-  "main": "handler.js",
+  "description": "Serverless TODO image app based on the starter code from Udacity",  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Ivan Mushketyk",
+  "author": "Tu Dao",
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.214.0",
