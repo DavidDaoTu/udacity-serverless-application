@@ -90,9 +90,24 @@ The project is based on the following rubric:
 
 
 ## Implementation Notes 
-### Backend
+### Backend's resources setup
 - Go to the "backend" folder, run the following command to install node_modules:
     ```js
     $ npm install
     ```
 - Configure the "serverless.yaml":
+
+
+### Features implementation:
+1. Authentication
+   - Client side
+
+
+   - Backend side
+
+
+2. GetToDos
+3. CreateTodo
+4. UpdateTodo
+5. DeleteTodo
+6. GenerateUploadURL
