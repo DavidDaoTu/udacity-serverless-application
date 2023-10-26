@@ -7,7 +7,7 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs16.x
   
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
@@ -24,8 +24,14 @@ provider:
   # Environment variables
   environment:
     TODOS_TABLE: Todo-Table-${self:provider.stage}
-    ATTACHMENT_BUCKET: files-todo-s3-bucket-${self:provider.stage}
     TODOS_CREATED_AT_INDEX: CreatedAtIdx
+    ATTACHMENT_BUCKET: files-todo-s3-bucket-${self:provider.stage}
+    SIGNED_URL_EXPIRATION: 300
+  
+  logs:
+    # Enalbe API gateway logs
+    restApi:
+      true
 
   iam:
     role:
