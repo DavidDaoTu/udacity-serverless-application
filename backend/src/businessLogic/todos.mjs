@@ -7,8 +7,9 @@ const logger = createLogger('businessLogic-todos')
 
 const todoAccess = new TodoAccess()
 
-export async function getAllTodos() {
-  return todoAccess.getAllTodos()
+export async function getAllTodos(userId) {
+  console.log("businessLogic: get all todos of userId ", userId)
+  return todoAccess.getAllTodos(userId)
 }
 
 export async function createGroup(createGroupRequest, userId) {

@@ -15,13 +15,18 @@ export class TodoAccess {
     this.dynamoDbClient = DynamoDBDocument.from(this.documentClient)
   }
 
-  async getAllTodos() {
+  async getAllTodos(userId) {
     logger.info('Getting all todos')
 
     const result = await this.dynamoDbClient.query({
       TableName: this.todosTable,
-      
+      KeyConditionExpression: 'userId = :userId',
+      ExpressionAttributeValues: {
+        ':userId': userId
+      },
+      ScanIndexForward: false      
     })
+    console.log("todos result = ", result)
     return result.Items
   }
 
