@@ -12,13 +12,19 @@ export async function getAllTodos(userId) {
   return todoAccess.getAllTodos(userId)
 }
 
-export async function createGroup(createGroupRequest, userId) {
-  const itemId = uuid.v4()
+export async function createTodo(createTodoRequest, userId) {
+  /* todoId */
+  const todoId = uuid.v4()
+  /* createdAt */
+  const createdAt = new Date().toISOString()
 
-  return await groupAccess.createGroup({
-    id: itemId,
+  return await todoAccess.createTodo({
+    todoId: todoId,
     userId: userId,
-    name: createGroupRequest.name,
-    description: createGroupRequest.description
+    attachmentUrl: "",
+    dueDate: createTodoRequest.dueDate,
+    createdAt: createdAt,
+    name: createTodoRequest.name,
+    done: false
   })
 }

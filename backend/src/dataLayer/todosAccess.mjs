@@ -3,7 +3,7 @@ import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 import AWSXRay from 'aws-xray-sdk-core'
 import { createLogger } from '../utils/logger.mjs'
 
-const logger = createLogger('http-get-todos')
+const logger = createLogger('dataLayer')
 
 export class TodoAccess {
   constructor(
@@ -30,14 +30,15 @@ export class TodoAccess {
     return result.Items
   }
 
-  async createGroup(group) {
-    logger.info(`Creating a group with id ${group.id}`)
+  async createTodo(todo) {
+    logger.info(`Creating a todo with id ${todo.todoId}`)
+    console.log("Storing a new todo: ", todo)
 
     await this.dynamoDbClient.put({
       TableName: this.todosTable,
-      Item: group
+      Item: todo
     })
 
-    return group
+    return todo
   }
 }
