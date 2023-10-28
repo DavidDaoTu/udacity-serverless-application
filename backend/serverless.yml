@@ -114,6 +114,7 @@ functions:
           method: delete
           path: todos/{todoId}
           authorizer: Auth
+          cors: true
     iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: 'Allow'

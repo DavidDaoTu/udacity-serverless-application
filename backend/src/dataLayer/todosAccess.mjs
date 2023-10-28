@@ -77,4 +77,21 @@ export class TodoAccess {
 
     return newUpdatedTodoItem
   }
+
+  async deleteTodo(deletedTodo) {
+    logger.info(`Deleting a todoId ${deletedTodo.todoId}`)
+    console.log("Deleting a todo request: ", deletedTodo)
+
+    const deletedItem = await this.dynamoDbClient.delete({
+      TableName: this.todosTable,
+      Key: {
+        'userId' : deletedTodo.userId,
+        'todoId' : deletedTodo.todoId
+      },
+      ReturnValues: 'ALL_OLD'
+    })
+    console.log("deletedItem: ", deletedItem)
+
+    return deletedItem
+  }
 }

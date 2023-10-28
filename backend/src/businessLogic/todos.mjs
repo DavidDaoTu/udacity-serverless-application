@@ -33,11 +33,20 @@ export async function createTodo(createTodoRequest, userId) {
 export async function updateTodo(todoId, updateTodoRequest, userId) {
   console.log(`businessLogic: update a todoId ${todoId} of userId: `, userId)
   
-  /* */
-
   return await todoAccess.updateTodo({
     todoId,
     userId,    
     ...updateTodoRequest
   })
 }
+
+
+export async function deleteTodo(todoId, userId) {
+  console.log(`businessLogic: delete a todoId ${todoId} of userId: `, userId)
+  
+  return await todoAccess.deleteTodo({
+    todoId,
+    userId
+  })
+}
+

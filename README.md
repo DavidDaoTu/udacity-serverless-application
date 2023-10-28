@@ -6,8 +6,11 @@ The project is based on the following rubric:
 1. The application allows users to create, update, delete TODO items
 
 
++ UpdateItem: Plz refer to these links:
+  + https://dynobase.dev/dynamodb-nodejs/#update-item
+  + https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html
 
-
++ DeleteItem: Remember to add "cors: true" under function in serverless.yml
 
 2. The application allows users to upload a file.
 
