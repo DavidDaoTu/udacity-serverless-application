@@ -94,4 +94,27 @@ export class TodoAccess {
 
     return deletedItem
   }
+
+  async updateTodoAttachmentUrl(updatedTodoAttachment) {
+    
+    console.log("todosAccess: Updating a updatedTodoAttachment: ", updatedTodoAttachment)
+
+    const newUpdatedTodoAttachmentUrl = await this.dynamoDbClient.update({
+        TableName: this.todosTable,
+        Key: {
+          'userId' : updatedTodoAttachment.userId,
+          'todoId' : updatedTodoAttachment.todoId
+        },
+
+        UpdateExpression: 'set attachmentUrl = :attachmentUrl',
+
+        ExpressionAttributeValues: {     
+          ':attachmentUrl'  : updatedTodoAttachment.attachmentUrl
+        },
+
+        ReturnValues: 'UPDATED_NEW'
+      })
+
+    return newUpdatedTodoAttachmentUrl
+  }
 }

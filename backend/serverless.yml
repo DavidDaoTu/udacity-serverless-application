@@ -130,6 +130,7 @@ functions:
           method: post
           path: todos/{todoId}/attachment
           authorizer: Auth
+          cors: true
     iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: 'Allow'
@@ -137,6 +138,11 @@ functions:
           - 's3:PutObject'
           - 's3:GetObject'
         Resource: arn:aws:s3:::${self:provider.environment.ATTACHMENT_BUCKET}/*
+      - Effect: 'Allow'
+        Action:
+          - 'dynamodb:UpdateItem'
+          - 'dynamodb:Query'          
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
 
 resources:
   Resources:    
