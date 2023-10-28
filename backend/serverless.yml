@@ -102,7 +102,8 @@ functions:
     iamRoleStatements:
       - Effect: 'Allow'
         Action:
-          - 'dynamodb:UpdateItem'    
+          - 'dynamodb:UpdateItem'
+          - 'dynamodb:Query'
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
 
   # DeleteTodo: allow to DeleteItem

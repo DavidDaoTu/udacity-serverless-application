@@ -13,6 +13,7 @@ export async function getAllTodos(userId) {
 }
 
 export async function createTodo(createTodoRequest, userId) {
+  console.log("businessLogic: create a todo of userId ", userId)
   /* todoId */
   const todoId = uuid.v4()
   /* createdAt */
@@ -26,5 +27,17 @@ export async function createTodo(createTodoRequest, userId) {
     createdAt: createdAt,
     name: createTodoRequest.name,
     done: false
+  })
+}
+
+export async function updateTodo(todoId, updateTodoRequest, userId) {
+  console.log(`businessLogic: update a todoId ${todoId} of userId: `, userId)
+  
+  /* */
+
+  return await todoAccess.updateTodo({
+    todoId,
+    userId,    
+    ...updateTodoRequest
   })
 }

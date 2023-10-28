@@ -41,4 +41,40 @@ export class TodoAccess {
 
     return todo
   }
+
+  async updateTodo(updatedTodoItem) {
+    // logger.info(`Updating a todo with id ${updatedTodoItem.todoId}`)
+    console.log("todosAccess: Updating a updatedTodoItem: ", updatedTodoItem)
+
+    const newUpdatedTodoItem = await this.dynamoDbClient
+      .update({
+        TableName: this.todosTable,
+        Key: {
+          'userId' : updatedTodoItem.userId,
+          'todoId' : updatedTodoItem.todoId
+        },
+
+        UpdateExpression: 'set #task_name = :name, \
+                              dueDate = :dueDate, \
+                              done = :done',
+
+        ConditionExpression: "(#task_name <> :name) or \
+                              (dueDate <> :dueDate) or \
+                              (done <> :done)",
+
+        ExpressionAttributeValues: {     
+          ':name'   : updatedTodoItem.name,
+          ':dueDate': updatedTodoItem.dueDate,
+          ':done'   : updatedTodoItem.done
+        },
+
+        ExpressionAttributeNames: {
+          '#task_name': 'name'
+        },
+
+        ReturnValues: 'UPDATED_NEW'
+      })
+
+    return newUpdatedTodoItem
+  }
 }
