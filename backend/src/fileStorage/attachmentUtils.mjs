@@ -16,7 +16,7 @@ export async function getUploadUrl(fileId) {
     const uploadFileUrl = await getSignedUrl(s3Client, command, {
       expiresIn: urlExpiration
     })
-    console.log("getUploadUrl() -> uploadFileUrl", uploadFileUrl)
+    logger.info(`Obtained an uploadUrl = ${uploadFileUrl}`, {function: "getUploadUrl()"} )
     return uploadFileUrl
 }
 

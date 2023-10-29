@@ -3,7 +3,7 @@ import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 import AWSXRay from 'aws-xray-sdk-core'
 import { createLogger } from '../utils/logger.mjs'
 
-const logger = createLogger('dataLayer')
+const logger = createLogger('dataLayer/todosAccess.mjs')
 
 export class TodoAccess {
   constructor(
@@ -16,7 +16,7 @@ export class TodoAccess {
   }
 
   async getAllTodos(userId) {
-    logger.info('Getting all todos')
+    logger.info(`Getting all todos of user_id ${userId}`, {function: "getAllTodos()"})
 
     const result = await this.dynamoDbClient.query({
       TableName: this.todosTable,
@@ -26,13 +26,14 @@ export class TodoAccess {
       },
       ScanIndexForward: false      
     })
-    console.log("todos result = ", result)
+
+    logger.info(`todos result = ${result}`, {function: "getAllTodos()"} )
+
     return result.Items
   }
 
   async createTodo(todo) {
-    logger.info(`Creating a todo with id ${todo.todoId}`)
-    console.log("Storing a new todo: ", todo)
+    logger.info(`Storing a new todo: ${todo}`, {function: "createTodo()"} )
 
     await this.dynamoDbClient.put({
       TableName: this.todosTable,
@@ -43,8 +44,7 @@ export class TodoAccess {
   }
 
   async updateTodo(updatedTodoItem) {
-    // logger.info(`Updating a todo with id ${updatedTodoItem.todoId}`)
-    console.log("todosAccess: Updating a updatedTodoItem: ", updatedTodoItem)
+    logger.info(`Updating a updatedTodoItem: ${updatedTodoItem}`, {function: "updateTodo()"})
 
     const newUpdatedTodoItem = await this.dynamoDbClient
       .update({
@@ -79,8 +79,7 @@ export class TodoAccess {
   }
 
   async deleteTodo(deletedTodo) {
-    logger.info(`Deleting a todoId ${deletedTodo.todoId}`)
-    console.log("Deleting a todo request: ", deletedTodo)
+    logger.info(`Deleting a todo request: ${deletedTodo}`, {function: "deleteTodo()"})
 
     const deletedItem = await this.dynamoDbClient.delete({
       TableName: this.todosTable,
@@ -90,14 +89,14 @@ export class TodoAccess {
       },
       ReturnValues: 'ALL_OLD'
     })
-    console.log("deletedItem: ", deletedItem)
 
+    logger.info(`deletedItem: ${deletedItem}`, {function: "deleteTodo()"})
     return deletedItem
   }
 
   async updateTodoAttachmentUrl(updatedTodoAttachment) {
     
-    console.log("todosAccess: Updating a updatedTodoAttachment: ", updatedTodoAttachment)
+    logger.info(`Updating a updatedTodoAttachment ${updatedTodoAttachment} `, {function: "updateTodoAttachmentUrl()"})
 
     const newUpdatedTodoAttachmentUrl = await this.dynamoDbClient.update({
         TableName: this.todosTable,

@@ -4,19 +4,21 @@ import { TodoAccess } from '../dataLayer/todosAccess.mjs'
 import { getUploadUrl, getAttachmentUrl } from '../fileStorage/attachmentUtils.mjs'
 import { createLogger } from '../utils/logger.mjs'
 
-const logger = createLogger('businessLogic-todos')
+const logger = createLogger('businessLogic/todos.mjs')
 
 const todoAccess = new TodoAccess()
 
 export async function getAllTodos(userId) {
-  console.log("businessLogic: get all todos of userId ", userId)
+  logger.info(`Get all todos of User_Id ${userId}`, {function: 'getAllTodos()'})  
   return todoAccess.getAllTodos(userId)
 }
 
 export async function createTodo(createTodoRequest, userId) {
-  console.log("businessLogic: create a todo of userId ", userId)
+  logger.info(`Create a new todo of User_ID ${userId}`, {function: 'createTodo()'})
+
   /* todoId */
   const todoId = uuid.v4()
+  
   /* createdAt */
   const createdAt = new Date().toISOString()
 
@@ -32,7 +34,7 @@ export async function createTodo(createTodoRequest, userId) {
 }
 
 export async function updateTodo(todoId, updateTodoRequest, userId) {
-  console.log(`businessLogic: update a todoId ${todoId} of userId: `, userId)
+  logger.info(`Update a todoId ${todoId} of userId ${userId}`, {function: 'updateTodo()'})
   
   return await todoAccess.updateTodo({
     todoId,
@@ -43,7 +45,7 @@ export async function updateTodo(todoId, updateTodoRequest, userId) {
 
 
 export async function deleteTodo(todoId, userId) {
-  console.log(`businessLogic: delete a todoId ${todoId} of userId: `, userId)
+  logger.info(`Delete a todoId ${todoId} of userId ${userId}`, {function: "deleteTodo()"} )
   
   return await todoAccess.deleteTodo({
     todoId,
@@ -52,25 +54,23 @@ export async function deleteTodo(todoId, userId) {
 }
 
 export async function getTodoFileUploadUrl(todoId, userId) {
-  console.log(`businessLogic: get uploadUrl for todoId ${todoId} of userId: `, userId)
+  logger.info(`Get uploadUrl for todoId ${todoId} of userId ${userId}`, {function: "getTodoFileUploadUrl()"})
   
   const fileId = uuid.v4()
   const uploadUrl = await getUploadUrl(fileId)
-  console.log("businessLogic: uploadUrl = ", uploadUrl)
-
+  
   /** Need to refactor later 
    * because having uploadUrl is not enough to gurantee have attachmentUrl
   */
   if (uploadUrl) {
     /* Updating attachmentUrl for todoId */
-    console.log(`businessLogic: updating attachmentUrl for todoId ${todoId}`)
     const attachmentUrl = await todoAccess.updateTodoAttachmentUrl({
       userId,
       todoId,
       attachmentUrl: getAttachmentUrl(fileId)
     })
 
-    console.log("attachmentUrl = ", attachmentUrl)
+    logger.info(`attachmentUrl = ${attachmentUrl}`, {function: "getTodoFileUploadUrl()"})
   }
 
   return uploadUrl

@@ -5,7 +5,7 @@ import { getTodoFileUploadUrl } from '../../businessLogic/todos.mjs'
 import { createLogger } from '../../utils/logger.mjs'
 import { getUserId } from '../utils.mjs'
 
-const logger = createLogger('http-generate-upload-url')
+const logger = createLogger('http/generateUploadUrl')
 
 export const handler = middy()
   .use(httpErrorHandler())
@@ -21,7 +21,8 @@ export const handler = middy()
     /* Get userId */
     const userId = getUserId(event)
     const uploadUrl = await getTodoFileUploadUrl(todoId, userId)
-    console.log("uploadUrl = ", uploadUrl)
+    logger.info(`uploadUrl = ${uploadUrl}`, {function: "handler()"} )
+    
     return {
       statusCode: 200,
       body: JSON.stringify({

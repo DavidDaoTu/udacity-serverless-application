@@ -5,7 +5,7 @@ import { updateTodo } from '../../businessLogic/todos.mjs'
 import { createLogger } from '../../utils/logger.mjs'
 import { getUserId } from '../utils.mjs'
 
-const logger = createLogger('http-update-todos')
+const logger = createLogger('http/updateTodos.js')
 
 export const handler = middy()
   .use(httpErrorHandler())
@@ -22,7 +22,7 @@ export const handler = middy()
     /* Get userId */
     const userId = getUserId(event)
     const updatedItem = await updateTodo(todoId, updatedTodo, userId)
-    console.log("updateItem = ", updatedItem)
+    logger.info(`updateItem = ${updatedItem}`, {function: "handler()"} )
 
     return {
       statusCode: 200      

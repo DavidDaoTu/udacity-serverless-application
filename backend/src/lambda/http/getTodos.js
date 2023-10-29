@@ -5,7 +5,7 @@ import { getAllTodos } from '../../businessLogic/todos.mjs'
 import { createLogger } from '../../utils/logger.mjs'
 import {getUserId} from '../utils.mjs'
 
-const logger = createLogger('http-get-todos')
+const logger = createLogger('http/getTodos.js')
 
 export const handler = middy()
   .use(httpErrorHandler())
@@ -17,7 +17,7 @@ export const handler = middy()
   .handler(async (event) => {
     // TODO: Get all TODO items for a current user
     //logger.info("Processing event: ", event)
-    console.log("lambda/http: Processing event: ", event)
+    logger.info(`Processing event: ${event} `, {function: "handler()"})
 
     /* Get User ID */
     const userId = getUserId(event)

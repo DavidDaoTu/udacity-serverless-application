@@ -5,7 +5,7 @@ import { deleteTodo } from '../../businessLogic/todos.mjs'
 import { createLogger } from '../../utils/logger.mjs'
 import { getUserId } from '../utils.mjs'
 
-const logger = createLogger('http-delete-todos')
+const logger = createLogger('http/deleteTodos.js')
 
 export const handler = middy()
   .use(httpErrorHandler())
@@ -21,7 +21,7 @@ export const handler = middy()
     /* Get userId */
     const userId = getUserId(event)
     const deletedItem = await deleteTodo(todoId, userId)
-    console.log("deletedItem = ", deletedItem)
+    logger.info(`deletedItem = ${deletedItem}`, {function: "handler()"})
 
     return {
       statusCode: 200      
