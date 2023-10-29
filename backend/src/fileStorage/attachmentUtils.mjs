@@ -1,6 +1,8 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { createLogger } from '../utils/logger.mjs'
 
+const logger = createLogger('fileStorage/attachmentUtils.mjs')
 
 const s3Client = new S3Client()
 const bucketName = process.env.ATTACHMENT_BUCKET
