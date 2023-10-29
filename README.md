@@ -115,6 +115,13 @@ Please copy-paste the above variables to your ***./client/.env*** file
 
 
 3. Application has sufficient monitoring.
+
+  - Thanks to reviewer's suggestions, I added X-Ray tracing for S3 & DynamoDB as well. Please see my X-Ray traces as below:
+    <p align="center">
+      <img src="Screenshots/XRayTraces.png" width="100%" title="Enabled X-Ray traces for both S3 & DynamoDB" alt="X-Ray traces"/>
+    </p>
+
+
   - Application logs are shown under CloudWatch's log groups with Winston's logs for troubleshooting
     <p align="center">
      <img src="Screenshots/CloudWatchLogs.png" width="100%" title="Application's logs in CloudWatch" alt="CloudWatch logs"/>
@@ -122,9 +129,10 @@ Please copy-paste the above variables to your ***./client/.env*** file
 
 4. HTTP requests are validated
 
-  - In order to create-todo & update-todo, we used APIGateway's validator with the following schemas
+  - Thanks to reviewer's comment, I added ***"minLength" & "pattern"*** properties in the models to filter out invalid task name.
+  -  In order to create-todo & update-todo, we used APIGateway's validator with the following schemas:
     <p align="center">
-     <img src="Screenshots/APIGatewayValidator.png" width="100%" title="APIGateway validator" alt="APIGateway validator"/>
+     <img src="Screenshots/APIGatewayRequestValidator.png" width="100%" title="API Gateway Request validator" alt="API Gateway request validator"/>
     </p>
 
 
